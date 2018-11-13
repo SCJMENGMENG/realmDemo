@@ -48,5 +48,6 @@ let Person = realm.objects('Person');
         }
 
         alert(allData)
+```
+
         
-        ```
