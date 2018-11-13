@@ -12,16 +12,26 @@ import {Platform, StyleSheet, Text, View, TextInput, Keyboard, TouchableOpacity,
 const Realm = require('realm');
 
 // 新建表模型
+const CarSchema = {
+    name: 'Car',
+    properties: {
+        speed: 'int',
+        seat: 'string[]',
+    }
+}
+
 const PersonSchema = {
     name: 'Person',
     properties: {
+        id:'int',
         name: 'string',
-        testScores: 'double?[]'
+        testScores: 'double?[]',
+        carData: {type: 'list',objectType:'Car'}
     }
 };
 
 // 根据提供的表初始化 Realm，可同时往数组中放入多个表
-let realm = new Realm({schema: [PersonSchema]});
+let realm = new Realm({schema: [CarSchema,PersonSchema]});
 
 type Props = {};
 export default class Appsss extends Component<Props> {
@@ -42,8 +52,10 @@ export default class Appsss extends Component<Props> {
 
         realm.write(() => {
             let charlie = realm.create('Person', {
+                id:0,
                 name: 'Charlie',
-                testScores: [100.0]
+                testScores: [100.0,21],
+                carData:[]
             });
 
             // Charlie had an excused absense for the second test and was allowed to skip it
@@ -83,6 +95,12 @@ export default class Appsss extends Component<Props> {
                     <Text>查看数据</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
+                    style={[{marginBottom: 10}, styles.textStyle]}
+                    onPress={this.update.bind(this)}
+                >
+                    <Text>修改数据</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                     style={[{marginBottom: 60,}, styles.textStyle]}
                     onPress={this.delete.bind(this)}
                 >
@@ -97,7 +115,8 @@ export default class Appsss extends Component<Props> {
         let allData = '';
 
         let Persons = realm.objects('Person');
-        let person = Persons.filtered('name == "Charlie"');
+        let person = Persons.filtered('id == 0');
+        // let person = Persons.filtered('name == "Charlie"');
         for (let i = 0; i<person[0].testScores.length; i++) {
             let tempData = '第' + i + '个数据:' + person[0].testScores[i] + '\n';
 
@@ -105,6 +124,23 @@ export default class Appsss extends Component<Props> {
         }
 
         alert(allData)
+    }
+
+    update() {
+
+        realm.write(() => {
+
+            realm.create('Person',{
+                id:0,
+                name:'Jon',
+                testScores:[102.00,21,666,888],
+                carData:[
+                    {speed: 60, seat:['大的','小的','多处']},
+                    {speed: 90, seat:['大的1','小的1','多处1']},
+                    {speed: 120, seat:['大的2','小的2','多处3']}
+                ]
+            })
+        })
     }
 
     delete() {
