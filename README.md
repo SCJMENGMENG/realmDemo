@@ -3,4 +3,4 @@
 
 ![image](https://github.com/SCJMENGMENG/realmDemo/blob/master/realmGIF.gif)
 
-realm
+realm install 之后会跑不起来
