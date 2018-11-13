@@ -5,4 +5,4 @@
 
 realm install 之后会跑不起来 拷贝realm.zip里的内容 替换 node_module里的realm的内容即可
 
-也可根据情况自行修改
+也可根据情况自行修改 （参考屏幕快照)
