@@ -1,6 +1,8 @@
 # realmDemo
 使用realm实现存储 搜索历史记录
 
+[文档传送门](https://realm.io/docs/javascript/latest/#queries)
+
 不带主键的没有研究
 
 ![image](https://github.com/SCJMENGMENG/realmDemo/blob/master/GIF.gif)
